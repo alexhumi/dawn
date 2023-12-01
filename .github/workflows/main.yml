@@ -1,0 +1,44 @@
+ #           - name: SFTP Deploy
+  # # You may pin to the exact commit or the version.
+  # # uses: wlixcc/SFTP-Deploy-Action@da88a4dbe95286266bbac3c0b2b8284048d20c8f
+  # uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+  # with:
+  #   # username
+  #   username: my_webapp
+  #   # your sftp server
+  #   server: home.carr.codes
+  #   # your sftp server port, default to 22
+  #   port: 22 # default is 22
+  #   # you can copy private_key from your *.pem file, keep format
+  #   ssh_private_key: 
+  #   # will put all file under this path
+  #   local_path: # default is ./*
+  #   # files will copy to under remote_path
+  #   remote_path: /var/www/my_webapp/www
+  #   # connection via sftp protocol only
+  #   sftp_only: # optional
+  #   # sftp args
+  #   sftpArgs: # optional
+  #   # This operation will delete all files in the remote path before upload. Please be careful set this to true
+  #   delete_remote_files: # optional
+  #   # SSH passsword，If a password is set, the secret key pair is ignored
+  #   password: # optional
+
+on: [push]
+
+jobs:
+    deploy_job:
+      runs-on: ubuntu-latest
+      name: deploy
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v2
+        - name: deploy file
+          uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+          with:
+              username: 'my_webapp'
+              server: ${{ secrets.DOMAIN }} 
+              password: ${{ secrets.MY_WEBAPP_PASS }} 
+              local_path: './'
+              remote_path: ${{ secrets.FILE_PATH }} 
+              sftpArgs: '-o ConnectTimeout=5'
