@@ -39,7 +39,7 @@ jobs:
               username: 'my_webapp'
               server: ${{ secrets.DOMAIN }} 
               password: ${{ secrets.MY_WEBAPP_PASS }} 
-              local_path: './'
+              # local_path: './'
               remote_path: ${{ secrets.FILE_PATH }} 
               sftp_only: true
               sftpArgs: '-o ConnectTimeout=5'
